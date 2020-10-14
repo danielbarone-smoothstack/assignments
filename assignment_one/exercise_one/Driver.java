@@ -4,11 +4,11 @@ public class Driver {
   public static void main(String[] args) {
     /* Validator to manage user guesses */
     GuessValidator validator = new GuessValidator(1, 100, 5);
-    
-    /* Collect the user's guesses while correct guess not found. */
     Scanner in = new Scanner(System.in);  // grab user input
     int userGuess = 0;  // init guess to 0
     boolean correctGuess = false; // correct guess found flag
+
+    /* Collect the user's guesses while correct guess not found. */
     do {
       /* Prompt user for their guess. */
       validator.promptForGuess();

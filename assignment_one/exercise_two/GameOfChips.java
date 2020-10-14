@@ -1,5 +1,6 @@
 import java.util.*;
 
+/* Auxilary class for the game's players */
 class Player {
   public String name;
   public int numChips;
@@ -19,14 +20,24 @@ class Player {
   }
 }
 
+/* 
+ * GameOfChips Class
+ */
 public class GameOfChips {
+  /* 
+   * Keeps track of players in a
+   * LinkedHashMap to effeciently check
+   * if duplicate name exists when adding player.
+   */
   private Map<String, Player> players;
-  public int chipsRemaining;
+  public int chipsRemaining; // chips left
 
+  /* Initialize the LinkedHashMap */
   public GameOfChips(int numPlayers) {
     players = new LinkedHashMap<String, Player>(numPlayers);
   }
 
+  /* Add players to the map if not a duplicate */
   public boolean addPlayer(String name) {
     Player newPlayer = new Player(name);
     if (players.containsKey(name.toLowerCase())) {
@@ -36,22 +47,32 @@ public class GameOfChips {
     return true;
   }
 
+  /* init game's starting number of chips */
   public void setNumChips(int chipsRemaining) {
     this.chipsRemaining = chipsRemaining;
   }
 
+  /* Code for one round -- iterates through all players once */
   public void play() {
+    /* Define iterator to keep track of current player */
     Iterator<Map.Entry<String, Player>> iterator = players.entrySet().iterator();
-    Scanner in = new Scanner(System.in);
+    Scanner in = new Scanner(System.in); // to read user input
+    
+    /* while we haven't cycled through all players... */
     while (iterator.hasNext()) {
+      /* Print info related to current state of the game */
       System.out.println("\n==========================\n");
       Map.Entry<String, Player> currPlayer = iterator.next();
-
       for (Map.Entry<String, Player> player : players.entrySet()) {
         Player p = player.getValue();
         p.printPlayer();
       }
 
+      /* 
+       * If game over, determine the winner.
+       * If num players > 2, winner is person with
+       * highest even number of chips
+       */
       if (chipsRemaining <= 0) {
         Player winner = new Player("");
         int currHighestScore = 0;
@@ -67,9 +88,11 @@ public class GameOfChips {
         break;
       }
 
+      /* Print remaining number of chips. */
       String output = String.format("There are %d chips remaining.", chipsRemaining);
       System.out.println(output);
   
+      /* Calculate max number of chips the current user can take */
       int maxNumChips;
       if (chipsRemaining % 2 == 0) {
         maxNumChips = chipsRemaining / 2;
@@ -78,9 +101,10 @@ public class GameOfChips {
       }
       output = String.format("You may take any number of chips from 1 to %d. ", maxNumChips);
       System.out.print(output);
+      
+      /* Validate chip number selection then add those chips to the player */
       int chipsSelected = 0;
       do {
-        
         System.out.print("How many will you take, " + currPlayer.getValue().name + "? ");
         String s = in.nextLine();
         try {
@@ -96,10 +120,8 @@ public class GameOfChips {
         }
       } while (true);
       
-      currPlayer.getValue().addChips(chipsSelected);
-      chipsRemaining -= chipsSelected;
-
-      
+      currPlayer.getValue().addChips(chipsSelected);  // add chips to the user
+      chipsRemaining -= chipsSelected;  // Decrement remaining number of chips
     }
   }
   

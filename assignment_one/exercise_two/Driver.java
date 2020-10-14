@@ -6,6 +6,7 @@ public class Driver {
     GameOfChips game;
     Scanner in = new Scanner(System.in);
 
+    /* Loop to restart game */
     while (true) {
       int numPlayers = 0;
 
@@ -17,7 +18,7 @@ public class Driver {
       try {
         numPlayers = Integer.parseInt(s);
         /* Invalid input (not even), default to 2. */
-        if (numPlayers % 2 != 0) {
+        if (numPlayers % 2 != 0 || numPlayers < 2) {
           System.out.println("Invalid input. Number of players defaulting to 2.");
           numPlayers = 2;
         }
@@ -61,6 +62,8 @@ public class Driver {
         }
       } while (true);
       
+
+      /* Play the game */
       while (game.chipsRemaining > 0) {
         game.play();
       }
