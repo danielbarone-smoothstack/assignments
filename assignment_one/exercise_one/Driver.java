@@ -2,16 +2,13 @@ import java.util.Scanner;
 
 public class Driver {
   public static void main(String[] args) {
-    /* Scanner to grab user input */
-    Scanner in = new Scanner(System.in);
     /* Validator to manage user guesses */
     GuessValidator validator = new GuessValidator(1, 100, 5);
-    /* init guess to 0 */
-    int userGuess = 0;  
-    /* false until correct guess found */
-    boolean correctGuess = false;
-
+    
     /* Collect the user's guesses while correct guess not found. */
+    Scanner in = new Scanner(System.in);  // grab user input
+    int userGuess = 0;  // init guess to 0
+    boolean correctGuess = false; // correct guess found flag
     do {
       /* Prompt user for their guess. */
       validator.promptForGuess();
